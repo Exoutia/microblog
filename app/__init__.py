@@ -1,6 +1,6 @@
 from flask import Flask
 from config import Config
-from falsk_sqlalchemy import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 
 
@@ -9,4 +9,4 @@ app.config.from_object(Config) # Load the configuration from the Config class
 db = SQLAlchemy(app) # Create an instance of the SQLAlchemy class using the app instance
 migrate = Migrate(app, db) # Create an instance of the Migrate class using the app and db instances
 
-from app import routes, models 
+from app import routes, models
