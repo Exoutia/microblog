@@ -14,6 +14,7 @@ Here I will write daily insights I have learned that day. It will be like some d
      - 3.  template inheritamce using base.html
 
 ## 20-12-2022
+### Web Forms
 - Today I am learning about the flask-WTF which is a thin wrapper around WTForms in python
 
 - WTForms is simple form framework which is used to make forms for you webapp it is helpfull to make the form for the webapp which can also be customize by the html. This helps us to keep presentation and code seprate. This is csrf(Cross-Site Request Forgery) proof.
@@ -43,5 +44,27 @@ Here I will write daily insights I have learned that day. It will be like some d
 
 - when we are using the browser we are usualy use get method which send data to client(browser) and its default but when we want to collect data we use post method which we need to specify or teh method not found error will be shown
 
-- now we creating the url_for functions.
+- now we creating the url_for functions which make the code more consistent and easy to use.
+
+### Database
+- Flask does not support database natively. so we can choose whichever data base we want
+
+- Relational Database is better for application that have structured data such as list of users, blog posts, etc. and NoSQL database is better for the data has less defined structure.
+
+- As we are making the microblog we will use relaional database.
+
+- Flask-SQLAlchemy is a flask friendly wrapper to the popular SQLAlchemy package, which is an Object Relational Mapper or ORM.
+     - ORMs allow applications to manage a database using high-level entities such as classes, objects and methods instead of tables and SQL.
+     - The job of ORM is to translate the high-level operations into database commands.
+
+- The nice thing about SQLAlchemy is that it is an ORM not for one, but for many relational databases. SQLAlchemy supports a long list of database engines, including the popular MySQL, PostgreSQL and SQLite.
+     - This is extremely powerful, because you can do your development using a simple SQLite database that does not require a server, and then when the time comes to deploy the application on a production server you can choose a more robust MySQL or PostgreSQL server, without having to change your application.
+- database can be designed in 'www sql designer'
+
+- Flask-sqlalchemy need to be initiated in config ad init.py.
+
+- when we want to change database we need to create whole databse from scratch but if we use flask-migrate which is based in `Alembic` which maintains the migration repository which is used to make the db by running the commands sequently and creating the repository.
+
+
+
 
