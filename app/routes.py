@@ -1,5 +1,7 @@
 from flask import render_template
 from app import app
+from app.forms import LoginForm
+
 
 @app.route('/') # Decorator that tells Flask what URL should trigger our function
 @app.route('/index') # Decorator that tells Flask what URL should trigger our function
@@ -21,3 +23,9 @@ def index():
         }
     ]
     return render_template('index.html', title='Home', user=user, posts=posts)
+
+# We are now adding the routes for login
+@app.route('/login')
+def login():
+    form = LoginForm()
+    return render_template('login.html', title='Sign In', form=form)
