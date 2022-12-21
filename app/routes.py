@@ -32,7 +32,7 @@ def index():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     # Chehck if the user is already logged in or not
-    if current_user.is_authenticated():
+    if current_user.is_authenticated:
         # return them to the index if user is already logged in
         return redirect(url_for('index'))
 
@@ -57,7 +57,7 @@ def login():
         next_page = request.args.get('next')
         if not next_page or url_parse(next_page).netloc != '':
             next_page = url_for('index')
-        return redirect(url_for(next_page))
+        return redirect(next_page)
 
 
     return render_template('login.html', title='Sign In', form=form)
