@@ -57,6 +57,8 @@ def login():
         next_page = request.args.get('next')
         if not next_page or url_parse(next_page).netloc != '':
             next_page = url_for('index')
+
+        # this here we only return the url_for object and that does not have the url
         return redirect(next_page)
 
 
