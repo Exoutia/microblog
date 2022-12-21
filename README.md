@@ -65,6 +65,18 @@ Here I will write daily insights I have learned that day. It will be like some d
 
 - when we want to change database we need to create whole databse from scratch but if we use flask-migrate which is based in `Alembic` which maintains the migration repository which is used to make the db by running the commands sequently and creating the repository.
 
+- An unfortunate inconsistency that in some instances such as in a db.relationship() call, the model is referenced by the model class, which typically starts with an uppercase character, while in other cases such as this db.ForeignKey() declaration, a model is given by its database table name, for which SQLAlchemy automatically uses lowercase characters and, for multi-word model names, snake case.
+
+- For one-to-many relationship field is normally defined on the 'one' side, and is used as convenient way to get access to the 'many'.
+     - So for example, if I have a user stored in u, the expression u.posts will run a database query that returns all the posts written by that user
+     - here we use the `db.relationship()` to connect the tables using primary and foreign key relationship.
+
+- we are using the `flask shell` and config it using the microblog.py so we dont need to enter the import statements all the time.
+
+## 21-12-2022
+
+
+
 
 
 
