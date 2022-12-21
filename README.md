@@ -120,7 +120,11 @@ Here I will write daily insights I have learned that day. It will be like some d
           return User.query.get(int(id))
      ```
 
+- We are implementing the logic to request the login to anonymous user to restrict them.
 
+- we can do this by giving the logic for the next page or index page.
+
+- An attacker could insert a URL to a malicious site in the next argument, so the application only redirects when the URL is relative, which ensures that the redirect stays within the same site as the application. To determine if the URL is relative or absolute, I parse it with Werkzeug's url_parse() function and then check if the netloc component is set or not.
 
 
 

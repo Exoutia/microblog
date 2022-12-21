@@ -26,7 +26,7 @@ def index():
             'body': 'You sucker of sugar I am the one who will control the universe'
         }
     ]
-    return render_template('index.html', title='Home', user=user, posts=posts)
+    return render_template('index.html', title='Home', posts=posts)
 
 # We are now adding the routes for login
 @app.route('/login', methods=['GET', 'POST'])
