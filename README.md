@@ -74,7 +74,51 @@ Here I will write daily insights I have learned that day. It will be like some d
 - we are using the `flask shell` and config it using the microblog.py so we dont need to enter the import statements all the time.
 
 ## 21-12-2022
+### User logins system
+- Passowrd hassing can be implemented by the werkzeg library with some function predefined in it.
 
+- we will make the function in model.py in the user class to set password and check it with username and password
+
+- now we are going to use extenstion called flask-login.
+     - This extension manages the user logged-in state, so that for example users can log in to the application and then navigate to different pages while the application "remembers" that the user is logged in. It also provides the "remember me" functionality that allows users to remain logged in even after closing the browser window.
+
+- As with other extenstions, Flask-Login needs to be created and initialized right after the application instance in `app/.__init__.py`.
+     ```py
+     # ...
+     from flask_login import LoginManager
+
+     app = Flask(__name__)
+     # ...
+     login = LoginManager(app)
+
+     # ...
+     ```
+
+- The flask-login extenstion works with the application's user model and expects certain properties and methods to be implemented in it.
+     - The Four required items are listed below:
+          1. **is_authenticated**: a property that is True if the user has valid credentials or False otherwise.
+          2. **is_active**: a property that is True if the user's account is active or False otherwise.
+          3. **is_anonymous**: a property that is False for regular users, and True for a special, anonymous user.
+          4. **get_id()**: a method that returns a unique identifier for the user as a string (unicode, if using Python 2).
+     - Flask login has a mixin-class which is appropriate for most user model classes called UserMixin you can pass it to the user mode like this
+          ```py
+          #...
+          from flask_login import UserMixin
+
+          class User(UserMixin, db.Model):
+          # ...
+          ```
+
+
+- flask-login keeps track of the looged in user by storing unique id in flask's user session, a storage space assigned to each user who connects to the application. This is done by connecting it to database to get the unique id of user. this is done by adding it into thee models.py
+     ```py
+     from app import login
+     # ...
+
+     @login.userr_loader
+     def load_user(id):
+          return User.query.get(int(id))
+     ```
 
 
 
