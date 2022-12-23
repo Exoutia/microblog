@@ -126,5 +126,25 @@ Here I will write daily insights I have learned that day. It will be like some d
 
 - An attacker could insert a URL to a malicious site in the next argument, so the application only redirects when the URL is relative, which ensures that the redirect stays within the same site as the application. To determine if the URL is relative or absolute, I parse it with Werkzeug's url_parse() function and then check if the netloc component is set or not.
 
+## 22-12-2022
+### user_profile and avatar
+- `@app.route('/user/<username>')` here '<>' angle brackets surround the element to tell that its a dynamic component.
+
+-  When a route has a dynamic component, Flask will accept any text in that portion of the URL, and will invoke the view function with the actual text as an argument. For example, if the client browser requests URL /user/susan, the view function is going to be called with the argument username set to 'susan'.
+
+- `# nosec` can be used to tell the editor to stop getting fired up where we dont need to think about security. I learn about in during the use of `md5` hashing to use the hash to get the gravatar from the email of user.
+
+- In jinga2 we can use sub-templates, and the conventions of sub-templates in my file is that sub-templates will start with the `./templates/_sub-templates.html`.
+
+## 23-12-2022
+- only some days left for christmas!!!
+- yay I want to add some emoji to the md file but vs code is not showing which emoji is added and i dont know how to fix it guess a reload will fix it after install a extension of `emoji` in md.
+- i am feeling lazy too.
+- so :field_hockey_stick_and_ball:
+- lets start anyways we need to make that user interface today at any cost.
+### User-profile
+- To use sub-template we need to add `include` statement in jinja2.
+
+
 
 
