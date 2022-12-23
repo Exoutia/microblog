@@ -145,6 +145,8 @@ Here I will write daily insights I have learned that day. It will be like some d
 ### User-profile
 - To use sub-template we need to add `include` statement in jinja2.
 
+- We added a `@before_request` for recording the last seen of user which will run the function inside it before any view function for the user. This way we can have a idea about the time the user was active.
+
 
 
 
