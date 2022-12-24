@@ -13,4 +13,4 @@ migrate = Migrate(app, db) # Create an instance of the Migrate class using the a
 login = LoginManager(app) # Create an instance of the LoginManager class using the app instance
 login.login_view = 'login' # this is to use to protect the user to see some pages anonymous
 
-from app import routes, models
+from app import routes, models, errors
