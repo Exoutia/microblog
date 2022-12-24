@@ -66,7 +66,7 @@ app.db
 # Flask stuff:
 instance/
 .webassets-cache
-.flaskenv
+/.flaskenv
 
 # Scrapy stuff:
 .scrapy
