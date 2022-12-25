@@ -60,10 +60,13 @@ cover/
 local_settings.py
 db.sqlite3
 db.sqlite3-journal
+app.db
+
 
 # Flask stuff:
 instance/
 .webassets-cache
+/.flaskenv
 
 # Scrapy stuff:
 .scrapy

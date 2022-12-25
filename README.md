@@ -145,6 +145,26 @@ Here I will write daily insights I have learned that day. It will be like some d
 ### User-profile
 - To use sub-template we need to add `include` statement in jinja2.
 
+- We added a `@before_request` for recording the last seen of user which will run the function inside it before any view function for the user. This way we can have a idea about the time the user was active.
 
 
+## 24-12-2022
+- Just one day before christmas and my brother's birthday.
+- today i need to atleast complete the work and learn some cloud compting concept.
+- I also need to learn rust also so much work to do but I will do it all not in one day but everyday.
+- I am not the smartest guy but i can be the consistent guy and can achieve all things with consistency.
+- lets start
+- one more thing i need to thought about how will the product will scale and security issues and different things about the product this will help be greatly in real world problems.
 
+### Error Handling
+- Error handling is one the most crucial thing one need to learn to work with real world application. lets learn how to fix them in flask.
+
+- Error function of flask acts same as the routes or view of app. we are returning the contents of their respective templates.
+
+- To get these error handlers registered with Flask, I need to import the new app/errors.py module after the application instance is created:
+     ```py
+     # ...
+     from app import routes, models, errors
+     ```
+
+- During the process we can have the error send to our email address.
