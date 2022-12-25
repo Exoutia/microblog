@@ -32,7 +32,7 @@ class User(db.Model, UserMixin):
     # class. This relationship links User instances to other User instances,
     # so as a convention let's say that for a pair of users linked by this
     # relationship, the left side user is following the right side user.
-    
+
     followed = db.relationship(
         'User', secondary=followers,
         primaryjoin=(followers.c.follower_id == id),
@@ -54,6 +54,21 @@ class User(db.Model, UserMixin):
     def avatar(self, size):
         digest = md5(self.email.lower().encode('utf-8')).hexdigest() # nosec
         return f'https://www.gravatar.com/avatar/{digest}?d=identicon&s={size}'
+
+    def follow(self, user):
+        if not self.is_following(user):
+            self.followed.append(user)
+
+    def unfollow(self, user):
+        if self.is_following(user):
+            self.followed.remove(user)
+
+    def is_following(self, user):
+        return self.followed.filter(
+            followers.c.followed_id == user.id
+        ).count() > 0
+
+
 
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
