@@ -5,6 +5,19 @@ from app import db, login
 from hashlib import md5
 
 
+# This is a direct translation of the association
+# table from my diagram above. Note that I am not
+# declaring this table as a model, like I did for
+# the users and posts tables. Since this is an
+# auxiliary table that has no data other than the
+# foreign keys, I created it without an associated model class.
+
+followers = db.Table('followers',
+        db.Column('follower_id', db.Integer, db.ForeignKey('user.id')),
+        db.Column('followed_id', db.Integer, db.ForeignKey('user.id'))
+)
+
+
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), index=True, unique=True)
@@ -13,6 +26,21 @@ class User(db.Model, UserMixin):
     posts = db.relationship('Post', backref='author', lazy='dynamic')
     about_me = db.Column(db.String(150))
     last_seen = db.Column(db.DateTime, default=datetime.utcnow)
+
+    # declare the many-to-many relationship in the users table
+    #  I'm using the db.relationship function to define the relationship in the model
+    # class. This relationship links User instances to other User instances,
+    # so as a convention let's say that for a pair of users linked by this
+    # relationship, the left side user is following the right side user.
+    
+    followed = db.relationship(
+        'User', secondary=followers,
+        primaryjoin=(followers.c.follower_id == id),
+        secondaryjoin=(followers.c.followed_id == id),
+        backref = db.backref('followers', lazy='dynamic'),
+        lazy='dynamic'
+    )
+
 
     def __repr__(self):
         return f'<User {self.username}>'
