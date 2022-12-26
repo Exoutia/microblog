@@ -168,3 +168,58 @@ Here I will write daily insights I have learned that day. It will be like some d
      ```
 
 - During the process we can have the error send to our email address.
+
+## 25-12-2022
+- Merry Christmas everyone :tada:
+- To day I am going to add some follower to my microblog and do some things with data base and learn more about it.
+### Followers
+- There are three types of relationship in Relational Database which is
+     1. One-TO-Many
+     2. One-TO-One
+     3. Many-TO-Many
+
+- To use many to many to realtion we use a auxilary table in which has both the keys of two tables.
+
+- A relationship in which instances of a class are linked to other instances of the same class is called a self-referential relationship, and that is exactly what I have here. As the user follow user and user has many follower and user follow many users we just discussed it is self-referential relationship.
+
+- ```py
+
+     class User(UserMixin, db.Model):
+     # ...
+     followed = db.relationship(
+        'User', secondary=followers,
+        primaryjoin=(followers.c.follower_id == id),
+        secondaryjoin=(followers.c.followed_id == id),
+        backref=db.backref('followers', lazy='dynamic'), lazy='dynamic')
+     ```
+     - 'User' is the right side entity of the relationship (the left side entity is the parent class). Since this is a self-referential relationship, I have to use the same class on both sides.
+
+     - secondary configures the association table that is used for this relationship, which I defined right above this class.
+
+     - primaryjoin indicates the condition that links the left side entity (the follower user) with the association table. The join condition for the left side of the relationship is the user ID matching the follower_id field of the association table. The value of this argument is followers.c.follower_id, which qreferences the follower_id column of the association table.
+
+     - secondaryjoin indicates the condition that links the right side entity (the followed user) with the association table. This condition is similar to the one for primaryjoin, with the only difference that now I'm using followed_id, which is the other foreign key in the association table.
+
+     - backref defines how this relationship will be accessed from the right side entity. From the left side, the relationship is named followed, so from the right side I am going to use the name followers to represent all the left side users that are linked to the target user in the right side. The additional lazy argument indicates the execution mode for this query. A mode of dynamic sets up the query to not run until specifically requested, which is also how I set up the posts one-to-many relationship.
+
+     - lazy is similar to the parameter of the same name in the backref, but this one applies to the left side query instead of the right side.
+
+- indexing makes the data far more easily sorted in data base this is why use to sort the post and show it into the home page.
+
+## 26-12-2022
+- So we today we are going to do unit-test.
+
+### Unit Tests
+- Unit testing is important cause it ensure that program is running fine without someone keeping an eye on the product and its every feature.
+
+- I have added four tests that exercise the password hashing, user avatar and followers functionality in the user model. The setUp() and tearDown() methods are special methods that the unit testing framework executes before and after each test respectively.
+
+- I have implemented a little hack to prevent the unit tests from using the regular database that I use for development. By setting the DATABASE_URL environment variable to sqlite://, I change the application configuration to direct SQLAlchemy to use an in-memory SQLite database during the tests.
+
+- The setUp() method then creates an application context and pushes it. This ensures that the Flask application instance, along with its configuration data is accessible to Flask extensions. Don't worry if this does not make a lot of sense at this point, as this will be covered in more detail later.
+
+- The db.create_all() call creates all the database tables. This is a quick way to create a database from scratch that is useful for testing. For development and production use I have already shown you how to create database tables through database migrations.
+
+- Because the follow and unfollow actions introduce changes in the application, I'm going to implement them as POST requests, which are triggered from the web browser as a result of submitting a web form. It would be easier to implement these routes as GET requests, but then they could be exploited in CSRF attacks. Because GET requests are harder to protect against CSRF, they should only be used on actions that do not introduce state changes. Implementing these as a result of a form submission is better because then a CSRF token can be added to the form.
+
+- But how can a follow or unfollow action be triggered from a web form when the only thing the user needs to do is click on "Follow" or "Unfollow", without submitting any data? To make this work, the form is going to be empty. The only elements in the form are going to be the CSRF token, which is implemented as a hidden field and added automatically by Flask-WTF, and a submit button, which is going to be what the user needs to click to trigger the action. Since the two actions are almost identical I'm going to use the same form for both. I'm going to call this form EmptyForm.
