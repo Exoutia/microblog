@@ -29,7 +29,7 @@ class User(db.Model, UserMixin):
 
     # declare the many-to-many relationship in the users table
     #  I'm using the db.relationship function to define the relationship in the model
-    # class. This relationship links User instances to other User instances,
+    # class. This relationship links User instanlazy is similar to the parameter of the same name in the backref, but this one applies to the left side query instead of the right side.ces to other User instances,
     # so as a convention let's say that for a pair of users linked by this
     # relationship, the left side user is following the right side user.
 
@@ -68,6 +68,14 @@ class User(db.Model, UserMixin):
             followers.c.followed_id == user.id
         ).count() > 0
 
+    # this fucntion get the posts from the followed by user to his/her homepage.
+    # this is done by the query we do at the posts table to get the all followed users
+    # we got both our and followed post from the use of posts and our followers table
+    # and this is done to use them cause they are indexed and this makes the data far more easily sorted.
+    def followed_posts(self):
+        followed = Post.query.join(followers, (followers.c.followed_id == Post.user_id)).filter(followers.c.follower_id == self.id)
+        own = Post.query.filter_by(user_id=self.id)
+        return followed.union(own).order_by(Post.timestamp.desc())
 
 
 class Post(db.Model):
