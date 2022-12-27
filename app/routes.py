@@ -1,8 +1,8 @@
 from flask import render_template, flash, redirect, url_for, request
 from app import app, db
-from app.forms import LoginForm, RegistrationForm, EditProfileForm, EmptyForm
+from app.forms import LoginForm, RegistrationForm, EditProfileForm, EmptyForm, PostForm
 from flask_login import current_user, login_user, logout_user, login_required
-from app.models import User
+from app.models import User, Post
 from werkzeug.urls import url_parse
 from datetime import datetime
 
@@ -14,26 +14,28 @@ from datetime import datetime
 @login_required
 def index():
     # This is here we are making a dummy user for our app this is just tes should be deleted after some points
-    user = {'username': 'Bibek'}
+    form = PostForm()
+    if form.validate_on_submit():
+        post = Post(body=form.post.data, author=current_user)
+        db.session.add(post)
+        db.session.commit()
+        flash('Your post is not live!')
+        return redirect(url_for('index'))
     posts = [
         {
-            'author': {'username': 'Jhon'},
-            'body': 'Beautiful day in India!'
+            'author': {'username': 'John'},
+            'body': 'Beautiful day in Portland!'
         },
         {
-            'author': {'username': 'Alice'},
-            'body': 'Boy we are demons who control the fate'
-        },
-        {
-            'author': {'username': 'Gummy_Bear_of_legends'},
-            'body': 'You sucker of sugar I am the one who will control the universe'
+            'author': {'username': 'Susan'},
+            'body': 'The Avengers movie was so cool!'
         }
     ]
-    return render_template('index.html', title='Home', posts=posts)
+    return render_template("index.html", title='Home Page', form=form,
+                           posts=posts)
+
 
 # We are now adding the routes for login
-
-
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     # Chehck if the user is already logged in or not
