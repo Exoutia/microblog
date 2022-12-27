@@ -24,4 +24,4 @@ class Config(object):
     ADMINS = ['your-email@example.com']
 
     # to get the post per page
-    POSTS_PER_PAGE = 3
+    POSTS_PER_PAGE = 25
