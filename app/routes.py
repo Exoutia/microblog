@@ -8,9 +8,9 @@ from datetime import datetime
 
 
 # Decorator that tells Flask what URL should trigger our function
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 # Decorator that tells Flask what URL should trigger our function
-@app.route('/index')
+@app.route('/index', methods=['GET', 'POST'])
 @login_required
 def index():
     # This is here we are making a dummy user for our app this is just tes should be deleted after some points
@@ -19,10 +19,10 @@ def index():
         post = Post(body=form.post.data, author=current_user)
         db.session.add(post)
         db.session.commit()
-        flash('Your post is not live!')
+        flash('Your post is now live!')
         return redirect(url_for('index'))
     posts = current_user.followed_posts().all()
-    return render_template("index.html", title="Home Page", form=form, posts=posts) 
+    return render_template("index.html", title="Home Page", form=form, posts=posts)
 
 # We are now adding the routes for login
 @app.route('/login', methods=['GET', 'POST'])
@@ -159,3 +159,12 @@ def unfollow(username):
         return redirect(url_for('user', username=username))
     else:
         return redirect(url_for('index'))
+
+
+# this is explore page for the microblog
+# this is same as home page but it will not have the post button.
+@app.route('/explore')
+@login_required
+def explore():
+    posts = Post.query.order_by(Post.timestamp.desc()).all()
+    return render_template('index.html', title="Explore", posts=posts)
