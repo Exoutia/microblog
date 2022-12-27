@@ -21,19 +21,8 @@ def index():
         db.session.commit()
         flash('Your post is not live!')
         return redirect(url_for('index'))
-    posts = [
-        {
-            'author': {'username': 'John'},
-            'body': 'Beautiful day in Portland!'
-        },
-        {
-            'author': {'username': 'Susan'},
-            'body': 'The Avengers movie was so cool!'
-        }
-    ]
-    return render_template("index.html", title='Home Page', form=form,
-                           posts=posts)
-
+    posts = current_user.followed_posts().all()
+    return render_template("index.html", title="Home Page", form=form, posts=posts) 
 
 # We are now adding the routes for login
 @app.route('/login', methods=['GET', 'POST'])
