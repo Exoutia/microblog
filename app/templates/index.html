@@ -2,6 +2,7 @@
 {% extends 'base.html' %}
 {% block content %}
     <h1>Hello, {{ current_user.username }}! </h1>
+    {% if form %}
     <form action="" method="post">
         {{form.hidden_tag()}}
         <p>
@@ -11,11 +12,12 @@
             <span style="color: red;">
             [{{error}}]
             </span>
+            {% endfor %}
         </p>
-        {{form.submit()}
+        {{form.submit()}}
     </form>
+    {% endif %}
     {% for post in posts %}
-        <p>{{post.body}}</p>
-        <p>Posted by {{post.author.username}} on {{post.timestamp}}</p>
+        {% include '_post.html' %}
     {% endfor %}
 {% endblock content %}
