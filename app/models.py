@@ -81,7 +81,7 @@ class User(db.Model, UserMixin):
         return followed.union(own).order_by(Post.timestamp.desc())
 
     # to help with reset password to the user
-    def get_reset_passoword_token(self, expires_in=600):
+    def get_reset_password_token(self, expires_in=600):
         return jwt.encode(
             {"reset_password": self.id, 'exp': time()+expires_in},
             app.config['SECRET_KEY'], algorithm='HS256'
@@ -93,7 +93,7 @@ class User(db.Model, UserMixin):
             id = jwt.decode(token, app.config['SECRET_KEY'], algorithms=['HS256'])
         except:
             return
-        return 
+        return
 
 
 class Post(db.Model):
