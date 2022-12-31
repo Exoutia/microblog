@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "ac7c766c079ed27db6f66208efebb7b2919f6ce6f156d1ef7f972488674086a1"
+            "sha256": "a48d13f63de7b30c2bbc5a937fd2eace7668e954538229d3f2b16c53c6234a41"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -48,6 +48,14 @@
             "markers": "python_version >= '3.6' and python_version < '4.0'",
             "version": "==2.2.1"
         },
+        "dominate": {
+            "hashes": [
+                "sha256:520101360892ebf9d0553f67d37e359ff92403d8a1e33814030503088a05da49",
+                "sha256:5fe4258614687c6d3de67b0bbd881ed435a93a19742ae187344055db17052402"
+            ],
+            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'",
+            "version": "==2.7.0"
+        },
         "email-validator": {
             "hashes": [
                 "sha256:553a66f8be2ec2dea641ae1d3f29017ab89e9d603d4a25cdaac39eefa283d769",
@@ -63,6 +71,13 @@
             ],
             "index": "pypi",
             "version": "==2.2.2"
+        },
+        "flask-bootstrap": {
+            "hashes": [
+                "sha256:cb08ed940183f6343a64e465e83b3a3f13c53e1baabb8d72b5da4545ef123ac8"
+            ],
+            "index": "pypi",
+            "version": "==3.3.7.1"
         },
         "flask-login": {
             "hashes": [
@@ -309,6 +324,12 @@
             ],
             "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4, 3.5'",
             "version": "==1.4.45"
+        },
+        "visitor": {
+            "hashes": [
+                "sha256:2c737903b2b6864ebc6167eef7cf3b997126f1aa94bdf590f90f1436d23e480a"
+            ],
+            "version": "==0.1.3"
         },
         "werkzeug": {
             "hashes": [
