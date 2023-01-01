@@ -3,6 +3,9 @@ from flask_login import UserMixin
 from datetime import datetime
 from app import db, login
 from hashlib import md5
+from time import time
+import jwt
+from app import app
 
 
 # This is a direct translation of the association
@@ -76,6 +79,21 @@ class User(db.Model, UserMixin):
         followed = Post.query.join(followers, (followers.c.followed_id == Post.user_id)).filter(followers.c.follower_id == self.id)
         own = Post.query.filter_by(user_id=self.id)
         return followed.union(own).order_by(Post.timestamp.desc())
+
+    # to help with reset password to the user
+    def get_reset_password_token(self, expires_in=600):
+        return jwt.encode(
+            {"reset_password": self.id, 'exp': time()+expires_in},
+            app.config['SECRET_KEY'], algorithm='HS256'
+        )
+
+    @staticmethod
+    def verify_reset_password_token(token):
+        try:
+            id = jwt.decode(token, app.config['SECRET_KEY'], algorithms=['HS256'])
+        except:
+            return
+        return
 
 
 class Post(db.Model):

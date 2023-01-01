@@ -8,6 +8,8 @@ from wtforms.validators import Length
 # Most Flask extensions use a flask_<name> naming convention
 # for their top-level import symbol. In this case,
 # Flask-WTF has all its symbols under flask_wtf.
+
+
 class LoginForm(FlaskForm):
     """This is the form we login with and it has field of username
     functions are self explantory.
@@ -20,12 +22,14 @@ class LoginForm(FlaskForm):
     remember_me = BooleanField('Remember Me')
     submit = SubmitField('Sign In')
 
+
 class RegistrationForm(FlaskForm):
     """this is the form for registration purpose."""
     username = StringField('Username', validators=[DataRequired()])
     email = StringField('Email', validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])
-    password2 = PasswordField('Repeat Password', validators=[DataRequired(), EqualTo('password')])
+    password2 = PasswordField('Repeat Password', validators=[
+                              DataRequired(), EqualTo('password')])
     submit = SubmitField('Register')
 
     def validate_username(self, username):
@@ -37,6 +41,7 @@ class RegistrationForm(FlaskForm):
         user = User.query.filter_by(email=email.data).first()
         if user is not None:
             raise ValidationError('Please use a different email address.')
+
 
 class EditProfileForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
@@ -59,5 +64,24 @@ class EditProfileForm(FlaskForm):
             if user is not None:
                 raise ValidationError('Please use a different username.')
 
+
 class EmptyForm(FlaskForm):
     submit = SubmitField('Submit')
+
+
+class PostForm(FlaskForm):
+    #  adding the post form for posting content for the site by the user
+    post = TextAreaField('Say Something', validators=[
+                         DataRequired(), Length(min=1, max=140)])
+    submit = SubmitField('Submit')
+
+
+class ResetPasswordRequestForm(FlaskForm):
+    email = StringField('Email', validators=[DataRequired(), Email()])
+    submit = SubmitField('Request Password Reset')
+
+
+class ResetPasswordForm(FlaskForm):
+    password = PasswordField('Password', validators=[DataRequired()])
+    password2 = PasswordField('Repeat Password', validators=[DataRequired(), EqualTo('password')])
+    submit = SubmitField('Request Passowrd Reset')
