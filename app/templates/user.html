@@ -1,17 +1,17 @@
 {% extends 'base.html' %}
 
-{% block content %}
+{% block app_content %}
 <table>
     <tr valign="top">
         <td><img src="{{ user.avatar(128) }}" alt=" {{user.username}}'s avatar "></td>
         <td>
             <h1>User: {{ user.username }}</h1>
             {% if user.about_me %}
-                <p>{{ user.about_me }}</p>
+            <p>{{ user.about_me }}</p>
             {% endif %}
 
             {% if user.last_seen %}
-                <p>last seen: {{ user.last_seen}}</p>
+            <p>last seen: {{ user.last_seen}}</p>
             {% endif %}
 
             <p>{{ user.followers.count() }} followers, {{ user.followed.count() }} following.</p>
@@ -38,13 +38,13 @@
 
 <hr>
 {% for post in posts %}
-    {% include '_post.html' %}
+{% include '_post.html' %}
 {% endfor %}
 {% if prev_url %}
-    <a href="{{ prev_url }}">Newer posts</a>
+<a href="{{ prev_url }}">Newer posts</a>
 {% endif %}
 {% if next_url %}
-    <a href="{{ next_url }}">Older posts</a>
+<a href="{{ next_url }}">Older posts</a>
 {% endif %}
 
-{% endblock content %}
+{% endblock app_content %}
