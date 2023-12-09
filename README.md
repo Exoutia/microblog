@@ -242,6 +242,7 @@ Today i am going to implicate the idea of adding posts in the social site by the
 
 - to show the limited number of posts in single page we can use paginate function of the sqlAlchemy.
 
+<<<<<<< Updated upstream
 ## 31-12-2022
 its not like i was away just giving an interview and next day i didn't bother to add any date. Today i am at last going to some designing part of the web at last.
 
@@ -255,3 +256,9 @@ its not like i was away just giving an interview and next day i didn't bother to
 - What I really want is for the send_email() function to be asynchronous. What does that mean? It means that when this function is called, the task of sending the email is scheduled to happen in the background, freeing the send_email() to return immediately so that the application can continue running concurrently with the email being sent.
 
 - Python has support for running asynchronous tasks, actually in more than one way. The threading and multiprocessing modules can both do this. Starting a background thread for email being sent is much less resource intensive than starting a brand new process, so I'm going to go with that approach
+=======
+- as we know that sending the mail make the system slow and it will take time to send the mail by function we are using so we need to make the email service async to make it available wehn its already running.
+- What I really want is for the send_email() function to be asynchronous. What does that mean? It means that when this function is called, the task of sending the email is scheduled to happen in the background, freeing the send_email() to return immediately so that the application can continue running concurrently with the email being sent.
+
+- Python has support for running asynchronous tasks, actually in more than one way. The threading and multiprocessing modules can both do this. Starting a background thread for email being sent is much less resource intensive than starting a brand new process, so I'm going to go with that approach
+>>>>>>> Stashed changes
