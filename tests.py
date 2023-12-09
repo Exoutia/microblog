@@ -1,10 +1,12 @@
 import os
-os.environ['DATABASE_URL'] = 'sqlite://'
-
-from datetime import datetime, timedelta
 import unittest
+from datetime import datetime, timedelta
+
 from app import app, db
-from app.models import User, Post
+from app.models import Post, User
+
+os.environ["DATABASE_URL"] = "sqlite://"
+
 
 class UserModelCase(unittest.TestCase):
     def setUp(self) -> None:
@@ -18,20 +20,25 @@ class UserModelCase(unittest.TestCase):
         self.app_context.pop()
 
     def test_password_hashing(self):
-        u = User(username='susan')
-        u.set_password('cat')
-        self.assertFalse(u.check_password('dog'))
-        self.assertTrue(u.check_password('cat'))
+        u = User(username="susan")
+        u.set_password("cat")
+        self.assertFalse(u.check_password("dog"))
+        self.assertTrue(u.check_password("cat"))
 
     def test_avatar(self):
-        u = User(username='john', email='john@example.com')
-        self.assertEqual(u.avatar(128), ('https://www.gravatar.com/avatar/'
-                                        'd4c74594d841139328695756648b6bd6'
-                                         '?d=identicon&s=128'))
+        u = User(username="john", email="john@example.com")
+        self.assertEqual(
+            u.avatar(128),
+            (
+                "https://www.gravatar.com/avatar/"
+                "d4c74594d841139328695756648b6bd6"
+                "?d=identicon&s=128"
+            ),
+        )
 
     def test_follow(self):
-        u1 = User(username='john', email='john@example.com')
-        u2 = User(username='susan', email='susan@exapmle.com')
+        u1 = User(username="john", email="john@example.com")
+        u2 = User(username="susan", email="susan@exapmle.com")
 
         db.session.add(u1)
         db.session.add(u2)
@@ -42,9 +49,9 @@ class UserModelCase(unittest.TestCase):
         db.session.commit()
         self.assertTrue(u1.is_following(u2))
         self.assertEqual(u1.followed.count(), 1)
-        self.assertEqual(u1.followed.first().username, 'susan')
+        self.assertEqual(u1.followed.first().username, "susan")
         self.assertEqual(u2.followers.count(), 1)
-        self.assertEqual(u2.followers.first().username, 'john')
+        self.assertEqual(u2.followers.first().username, "john")
 
         u1.unfollow(u2)
         db.session.commit()
@@ -52,22 +59,29 @@ class UserModelCase(unittest.TestCase):
         self.assertEqual(u1.followed.count(), 0)
         self.assertEqual(u2.followers.count(), 0)
 
-
     def test_follow_posts(self):
         # create fout users
-        u1 = User(username='user_1', email='user_1@example.com')
-        u2 = User(username='user_2', email='user_2@example.com')
-        u3 = User(username='user_3', email='user_3@example.com')
-        u4 = User(username='user_4', email='user_4@example.com')
+        u1 = User(username="user_1", email="user_1@example.com")
+        u2 = User(username="user_2", email="user_2@example.com")
+        u3 = User(username="user_3", email="user_3@example.com")
+        u4 = User(username="user_4", email="user_4@example.com")
 
         db.session.add_all([u1, u2, u3, u4])
 
         # create four posts
         now = datetime.utcnow()
-        p1 = Post(body='Hello from user_1', author=u1, timestamp=now + timedelta(seconds=1) )
-        p2 = Post(body='Hello from user_2', author=u2, timestamp=now + timedelta(seconds=1) )
-        p3 = Post(body='Hello from user_3', author=u3, timestamp=now + timedelta(seconds=1) )
-        p4 = Post(body='Hello from user_4', author=u4, timestamp=now + timedelta(seconds=1) )
+        p1 = Post(
+            body="Hello from user_1", author=u1, timestamp=now + timedelta(seconds=1)
+        )
+        p2 = Post(
+            body="Hello from user_2", author=u2, timestamp=now + timedelta(seconds=1)
+        )
+        p3 = Post(
+            body="Hello from user_3", author=u3, timestamp=now + timedelta(seconds=1)
+        )
+        p4 = Post(
+            body="Hello from user_4", author=u4, timestamp=now + timedelta(seconds=1)
+        )
         db.session.add_all([p1, p2, p3, p4])
         db.session.commit()
 
@@ -87,6 +101,7 @@ class UserModelCase(unittest.TestCase):
         self.assertEqual(f2, [p2, p3])
         self.assertEqual(f3, [p3, p4])
         self.assertEqual(f4, [p4])
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
