@@ -7,7 +7,7 @@ import logging
 from logging.handlers import SMTPHandler, RotatingFileHandler
 import os
 from flask_mail import Mail
-from flask_bootstrap import Bootstrap
+# from flask_bootstrap import Bootstrap
 
 app = Flask(__name__) # Create an instance of the Flask class using '__name__' as the name of the application
 app.config.from_object(Config) # Load the configuration from the Config class
@@ -16,7 +16,7 @@ migrate = Migrate(app, db) # Create an instance of the Migrate class using the a
 login = LoginManager(app) # Create an instance of the LoginManager class using the app instance
 login.login_view = 'login' # this is to use to protect the user to see some pages anonymous
 mail = Mail(app)
-bootstrap = Bootstrap(app)
+# bootstrap = Bootstrap(app)
 
 from app import routes, models, errors # not sure what it is doing here need to find it.
 
