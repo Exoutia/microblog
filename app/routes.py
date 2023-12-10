@@ -50,6 +50,11 @@ def index():
     )
 
 
+@app.route("/test/base")
+def test_base():
+    return render_template("tailwindbase.html")
+
+
 # We are now adding the routes for login
 @app.route("/login", methods=["GET", "POST"])
 def login():
