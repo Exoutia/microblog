@@ -1,25 +1,28 @@
 {% extends "base.html" %}
 {% block app_content %}
+    <!-- BEGIN: User Greeting -->
     <h1 class="mb-4 mt-1 text-3xl font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-6xl">
         Hello,
         {{ current_user.username }}
     </h1>
+    <!-- END: User Greeting -->
     {# only if the file is home page otherwise post form will not be visible #}
     {% if form %}
-        <!-- Modal toggle -->
+        <!-- BEGIN: Modal toggle -->
         <button data-modal-target="crud-modal"
                 data-modal-toggle="crud-modal"
                 class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none m-2 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                 type="button">Post</button>
-        <!-- Main modal -->
+        <!-- END: Modal toggle -->
+        <!-- BEGIN: Main modal -->
         <div id="crud-modal"
              tabindex="-1"
              aria-hidden="true"
              class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
             <div class="relative p-4 w-full max-w-md max-h-full">
-                <!-- Modal content -->
+                <!-- BEGIN: Modal content -->
                 <div class="relative bg-white rounded-lg shadow dark:bg-Base">
-                    <!-- Modal header -->
+                    <!-- BEGIN: Modal header -->
                     <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-Overlay0">
                         <h3 class="text-lg font-semibold text-Base dark:text-white">Create New Post</h3>
                         <button type="button"
@@ -35,7 +38,8 @@
                             <span class="sr-only">Close</span>
                         </button>
                     </div>
-                    <!-- Modal body -->
+                    <!-- END: Modal header -->
+                    <!-- BEGIN: Modal body -->
                     <form action="" method="post" class="p-4 md:p-5">
                         {{ form.hidden_tag() }}
                         <div class="grid gap-4 mb-4 grid-cols-2">
@@ -60,10 +64,10 @@
                 </div>
             </div>
         </div>
+        <!-- END: Main modal -->
     {% endif %}
     {% for post in posts %}
         {% include "_post.html" %}
-
     {% endfor %}
     {% if prev_url %}<a href="{{ prev_url }}">Newer posts</a>{% endif %}
     {% if next_url %}<a href="{{ next_url }}">Older posts</a>{% endif %}

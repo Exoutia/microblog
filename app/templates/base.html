@@ -15,8 +15,8 @@
       <a href="{{ url_for("index") }}"
          class="flex items-center space-x-3 rtl:space-x-reverse">
         <img src="{{ url_for('static', filename='assets/logo.png') }}"
-            height="32"
-            width="32"
+             height="32"
+             width="32"
              class="h-8"
              alt="Microblog Logo">
         <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Microblog</span>
@@ -114,6 +114,7 @@
       {% endif %}
     {% endwith %}
     {# application content needs to be provided in the app_content block #}
-    {% block app_content %}{% endblock app_content %}
+    {% block app_content %}
+    {% endblock app_content %}
   </div>
 {% endblock content %}
