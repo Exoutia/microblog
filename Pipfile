@@ -14,6 +14,7 @@ email-validator = "*"
 flask-mail = "*"
 pyjwt = "*"
 flask-bootstrap = "*"
+djlint = "*"
 
 [dev-packages]
 autopep8 = "*"
