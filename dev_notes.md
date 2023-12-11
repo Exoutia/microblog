@@ -265,3 +265,8 @@ its not like i was away just giving an interview and next day i didn't bother to
 
 - From today I am going to make new frontend for the application and adding tailwindcss to it to make it good looking.
 - I am thinking of adding 2fa also in the security purpose.
+
+
+### 11/12/2023
+- I have fixed the form and added a button to create and submit post.
+- Now I just need to add some more things to change the whole frontend to catppucin mocha.
