@@ -1,29 +1,70 @@
-
-{% extends 'base.html' %}
+{% extends "base.html" %}
 {% block app_content %}
-    <h1>Hello, {{ current_user.username }}! </h1>
+    <h1 class="mb-4 mt-1 text-3xl font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-6xl">
+        Hello,
+        {{ current_user.username }}
+    </h1>
+    {# only if the file is home page otherwise post form will not be visible #}
     {% if form %}
-    <form action="" method="post">
-        {{form.hidden_tag()}}
-        <p>
-            {{form.post.label}}<br>
-            {{form.post(cols=32, rows=4)}} <br>
-            {% for error in form.post.errors %}
-            <span style="color: red;">
-            [{{error}}]
-            </span>
-            {% endfor %}
-        </p>
-        {{form.submit()}}
-    </form>
+        <!-- Modal toggle -->
+        <button data-modal-target="crud-modal"
+                data-modal-toggle="crud-modal"
+                class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none m-2 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                type="button">Post</button>
+        <!-- Main modal -->
+        <div id="crud-modal"
+             tabindex="-1"
+             aria-hidden="true"
+             class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+            <div class="relative p-4 w-full max-w-md max-h-full">
+                <!-- Modal content -->
+                <div class="relative bg-white rounded-lg shadow dark:bg-Base">
+                    <!-- Modal header -->
+                    <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-Overlay0">
+                        <h3 class="text-lg font-semibold text-Base dark:text-white">Create New Post</h3>
+                        <button type="button"
+                                class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-Base rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-Surface1 dark:hover:text-Text"
+                                data-modal-toggle="crud-modal">
+                            <svg class="w-3 h-3"
+                                 aria-hidden="true"
+                                 xmlns="http://www.w3.org/2000/svg"
+                                 fill="none"
+                                 viewBox="0 0 14 14">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                            </svg>
+                            <span class="sr-only">Close</span>
+                        </button>
+                    </div>
+                    <!-- Modal body -->
+                    <form action="" method="post" class="p-4 md:p-5">
+                        {{ form.hidden_tag() }}
+                        <div class="grid gap-4 mb-4 grid-cols-2">
+                            <div class="col-span-2">
+                                {{ form.post.label(class_="block text-black mb-2 text-sm font-medium text-gray-900 dark:text-Text") }}
+                                {{ form.post(cols=32, rows=4, class_="block p-2.5 w-full text-sm text-Base bg-gray-50 rounded-lg border border-Surface2 focus:ring-blue-500 focus:border-blue-500 dark:bg-Surface2 dark:border-Surface1 dark:placeholder-gray-400 dark:text-Text dark:focus:ring-blue-500 dark:focus:border-blue-500") }}
+                                {% for error in form.post.errors %}<span class="text-Red">[{{ error }}]</span>{% endfor %}
+                            </div>
+                        </div>
+                        <button type="submit"
+                                class="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                            <svg class="me-1 -ms-1 w-5 h-5"
+                                 fill="currentColor"
+                                 viewBox="0 0 20 20"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd">
+                                </path>
+                            </svg>
+                            {{ form.submit() }}
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
     {% endif %}
     {% for post in posts %}
-        {% include '_post.html' %}
+        {% include "_post.html" %}
+
     {% endfor %}
-    {% if prev_url %}
-    <a href="{{ prev_url }}">Newer posts</a>
-    {% endif %}
-    {% if next_url %}
-    <a href="{{ next_url }}">Older posts</a>
-    {% endif %}
+    {% if prev_url %}<a href="{{ prev_url }}">Newer posts</a>{% endif %}
+    {% if next_url %}<a href="{{ next_url }}">Older posts</a>{% endif %}
 {% endblock app_content %}
